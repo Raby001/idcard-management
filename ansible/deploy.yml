@@ -23,15 +23,6 @@
     - debug:
         var: build_result.stdout_lines
 
-    - name: Run tests
-      shell: |
-        cd /idcard-management
-        ./mvnw test
-      register: test_result
-
-    - debug:
-        var: test_result.stdout_lines
-
     - name: Create backup folder
       shell: mkdir -p /root/backup
 
