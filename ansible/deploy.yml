@@ -9,7 +9,6 @@ jobs:
 build-test-deploy:
 runs-on: ubuntu-latest
 
-```
 steps:
   - name: Checkout Code
     uses: actions/checkout@v4
@@ -42,15 +41,14 @@ steps:
       username: ${{ secrets.EMAIL_USERNAME }}
       password: ${{ secrets.EMAIL_PASSWORD }}
       subject: GitHub Actions Build Failed
-      to: srengty@gmail.com
-      from: ${{ secrets.EMAIL_USERNAME }}
       body: |
         Repository: ${{ github.repository }}
-        Branch: ${{ github.ref_name }}
         Commit: ${{ github.sha }}
 
         Build failed.
 
         Workflow:
         https://github.com/${{ github.repository }}/actions
-```
+
+      to: srengty@gmail.com
+      from: ${{ secrets.EMAIL_USERNAME }}
