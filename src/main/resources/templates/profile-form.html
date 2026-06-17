@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Create Profile</title>
+
+    <style>
+
+        *{
+            box-sizing:border-box;
+            font-family:Arial,sans-serif;
+        }
+
+        body{
+            margin:0;
+            background:#f4f6f9;
+        }
+
+        .navbar{
+            background:#1e3a8a;
+            color:white;
+            padding:15px;
+        }
+
+        .navbar a{
+            color:white;
+            text-decoration:none;
+            margin-right:20px;
+        }
+
+        .container{
+            display:flex;
+            gap:40px;
+            padding:30px;
+        }
+
+        .form-section{
+            width:50%;
+            background:white;
+            padding:20px;
+            border-radius:10px;
+            box-shadow:0 3px 10px rgba(0,0,0,.1);
+        }
+
+        .preview-section{
+            width:50%;
+        }
+
+        input,
+        select{
+            width:100%;
+            padding:10px;
+            margin-top:5px;
+            margin-bottom:15px;
+        }
+
+        button{
+            width:100%;
+            padding:12px;
+            background:#1e3a8a;
+            color:white;
+            border:none;
+            cursor:pointer;
+            border-radius:6px;
+        }
+
+        .card{
+            background:white;
+            border-radius:12px;
+            overflow:hidden;
+            box-shadow:0 4px 10px rgba(0,0,0,.15);
+        }
+
+        .card-header{
+            background:#1e3a8a;
+            color:white;
+            text-align:center;
+            padding:15px;
+        }
+
+        .card-body{
+            padding:20px;
+            text-align:center;
+        }
+
+        .avatar{
+            width:120px;
+            height:120px;
+            border-radius:50%;
+            background:#ddd;
+            margin:auto;
+        }
+
+        .name{
+            font-size:22px;
+            font-weight:bold;
+            margin-top:15px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <a href="/">Home</a>
+    <a href="/profiles">Profiles</a>
+</div>
+
+<div class="container">
+
+    <div class="form-section">
+
+        <h2>Create Profile</h2>
+
+        <form action="/profiles/save" method="post">
+
+            <label>Full Name</label>
+            <input
+                    type="text"
+                    id="fullName"
+                    name="fullName"
+                    required>
+
+            <label>Profile Type</label>
+            <select
+                    id="type"
+                    name="type">
+
+                <option>STUDENT</option>
+                <option>EMPLOYEE</option>
+                <option>USER</option>
+
+            </select>
+
+            <label>Department</label>
+            <input
+                    type="text"
+                    id="department"
+                    name="department">
+
+            <label>Email</label>
+            <input
+                    type="email"
+                    id="email"
+                    name="email">
+
+            <button type="submit">
+                Save Profile
+            </button>
+
+        </form>
+
+    </div>
+
+    <div class="preview-section">
+
+        <div class="card">
+
+            <div class="card-header">
+                <h2>ITC ID CARD</h2>
+            </div>
+
+            <div class="card-body">
+
+                <div class="avatar"></div>
+
+                <div
+                        class="name"
+                        id="previewName">
+
+                    Your Name
+
+                </div>
+
+                <p id="previewType">
+                    STUDENT
+                </p>
+
+                <p id="previewDepartment">
+                    Department
+                </p>
+
+                <p id="previewEmail">
+                    email@example.com
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+document.getElementById("fullName")
+.addEventListener("input", function() {
+    document.getElementById("previewName").innerText = this.value;
+});
+
+document.getElementById("type")
+.addEventListener("change", function() {
+    document.getElementById("previewType").innerText = this.value;
+});
+
+document.getElementById("department")
+.addEventListener("input", function() {
+    document.getElementById("previewDepartment").innerText = this.value;
+});
+
+document.getElementById("email")
+.addEventListener("input", function() {
+    document.getElementById("previewEmail").innerText = this.value;
+});
+
+</script>
+
+</body>
+</html>

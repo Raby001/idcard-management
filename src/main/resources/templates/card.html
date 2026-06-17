@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <title>ID Card</title>
+
+    <style>
+
+        body{
+            background:#f5f5f5;
+            font-family:Arial,sans-serif;
+            display:flex;
+            justify-content:center;
+            margin-top:50px;
+        }
+
+        .card{
+            width:400px;
+            background:white;
+            border-radius:12px;
+            overflow:hidden;
+            box-shadow:0 5px 15px rgba(0,0,0,.15);
+        }
+
+        .header{
+            background:#1e3a8a;
+            color:white;
+            text-align:center;
+            padding:15px;
+        }
+
+        .body{
+            padding:20px;
+            text-align:center;
+        }
+
+        .avatar{
+            width:120px;
+            height:120px;
+            border-radius:50%;
+            background:#ddd;
+            margin:auto;
+        }
+
+        .name{
+            font-size:24px;
+            font-weight:bold;
+            margin-top:15px;
+        }
+
+        .type{
+            color:#666;
+            margin-top:5px;
+        }
+
+        .info{
+            text-align:left;
+            margin-top:20px;
+        }
+
+        .footer{
+            text-align:center;
+            background:#f3f4f6;
+            padding:10px;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="card">
+
+    <div class="header">
+        <h2>Institute of Technology of Cambodia</h2>
+        <p>ID CARD</p>
+    </div>
+
+    <div class="body">
+
+        <div class="avatar"></div>
+
+        <div class="name"
+             th:text="${profile.fullName}">
+        </div>
+
+        <div class="type"
+             th:text="${profile.type}">
+        </div>
+
+        <div class="info">
+
+            <p>
+                <strong>Registration:</strong>
+                <span th:text="${profile.registrationNumber}">
+                </span>
+            </p>
+
+            <p>
+                <strong>Department:</strong>
+                <span th:text="${profile.department}">
+                </span>
+            </p>
+
+            <p>
+                <strong>Email:</strong>
+                <span th:text="${profile.email}">
+                </span>
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+        ID Card Management System
+    </div>
+
+</div>
+
+</body>
+</html>

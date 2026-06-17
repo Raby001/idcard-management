@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <title>ID Card</title>
+
+    <style>
+
+        body{
+            background:#f4f6f9;
+            font-family:Arial;
+            display:flex;
+            justify-content:center;
+            margin-top:40px;
+        }
+
+        .card{
+            width:420px;
+            background:white;
+            border-radius:12px;
+            overflow:hidden;
+            box-shadow:0 4px 15px rgba(0,0,0,.15);
+        }
+
+        .header{
+            background:#1e3a8a;
+            color:white;
+            text-align:center;
+            padding:15px;
+        }
+
+        .body{
+            text-align:center;
+            padding:20px;
+        }
+
+        .avatar{
+            width:120px;
+            height:120px;
+            background:#ddd;
+            border-radius:50%;
+            margin:auto;
+        }
+
+        .name{
+            font-size:24px;
+            font-weight:bold;
+            margin-top:15px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="header">
+        <h2>ITC ID CARD</h2>
+    </div>
+
+    <div class="body">
+
+        <div class="avatar"></div>
+
+        <div
+                class="name"
+                th:text="${profile.fullName}">
+        </div>
+
+        <p th:text="${profile.type}"></p>
+
+        <p>
+            Registration:
+            <span
+                    th:text="${profile.registrationNumber}">
+            </span>
+        </p>
+
+        <p>
+            Department:
+            <span
+                    th:text="${profile.department}">
+            </span>
+        </p>
+
+        <p>
+            Email:
+            <span
+                    th:text="${profile.email}">
+            </span>
+        </p>
+
+        <a href="/profiles">
+            Back to Profiles
+        </a>
+
+        <a th:href="@{/export/pdf/{id}(id=${profile.id})}">
+            Download PDF
+        </a>
+
+        <a th:href="@{/qr/{id}(id=${profile.id})}">
+            QR
+        </a>
+
+        <a th:href="@{/barcode/{id}(id=${profile.id})}">
+            Barcode
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>
