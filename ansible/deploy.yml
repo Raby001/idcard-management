@@ -1,0 +1,52 @@
+---
+- name: Deploy ID Card Application
+  hosts: web
+  gather_facts: no
+
+  tasks:
+
+    - name: Git pull latest code
+      shell: |
+        cd /idcard-management
+        git pull
+      register: git_pull
+
+    - debug:
+        var: git_pull.stdout_lines
+
+    - name: Build application
+      shell: |
+        cd /idcard-management
+        ./mvnw clean package -DskipTests
+      register: build_result
+
+    - debug:
+        var: build_result.stdout_lines
+
+    - name: Run tests
+      shell: |
+        cd /idcard-management
+        ./mvnw test
+      register: test_result
+
+    - debug:
+        var: test_result.stdout_lines
+
+    - name: Create backup folder
+      shell: mkdir -p /root/backup
+
+    - name: Backup MySQL database
+      shell: |
+        mysqldump \
+        -h idcard-mysql \
+        -u root \
+        -pHello@123 \
+        A-HAN_Raby-db \
+        > /root/backup/backup.sql
+
+    - name: Verify backup
+      shell: ls -lh /root/backup/backup.sql
+      register: backup_file
+
+    - debug:
+        var: backup_file.stdout
