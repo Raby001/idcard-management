@@ -1,43 +1,54 @@
----
-- name: Deploy ID Card Application
-  hosts: web
-  gather_facts: no
+name: CI-CD
 
-  tasks:
+on:
+push:
+branches:
+- fq02-docker
 
-    - name: Git pull latest code
-      shell: |
-        cd /idcard-management
-        git pull
-      register: git_pull
+jobs:
+build-test-deploy:
+runs-on: ubuntu-latest
 
-    - debug:
-        var: git_pull.stdout_lines
+```
+steps:
+  - name: Checkout Code
+    uses: actions/checkout@v4
 
-    - name: Build application
-      shell: |
-        cd /idcard-management
-        ./mvnw clean package -DskipTests
-      register: build_result
+  - name: Setup Java 21
+    uses: actions/setup-java@v4
+    with:
+      distribution: temurin
+      java-version: '21'
 
-    - debug:
-        var: build_result.stdout_lines
+  - name: Make Maven Wrapper Executable
+    run: chmod +x mvnw
 
-    - name: Create backup folder
-      shell: mkdir -p /root/backup
+  - name: Build
+    run: ./mvnw clean package -DskipTests
 
-    - name: Backup MySQL database
-      shell: |
-        mysqldump \
-        -h idcard-mysql \
-        -u root \
-        -pHello@123 \
-        A-HAN_Raby-db \
-        > /root/backup/backup.sql
+  - name: Test
+    run: ./mvnw test
 
-    - name: Verify backup
-      shell: ls -lh /root/backup/backup.sql
-      register: backup_file
+  - name: Deploy
+    run: echo "Deploy successful"
 
-    - debug:
-        var: backup_file.stdout
+  - name: Send Email on Failure
+    if: failure()
+    uses: dawidd6/action-send-mail@v3
+    with:
+      server_address: smtp.gmail.com
+      server_port: 587
+      username: ${{ secrets.EMAIL_USERNAME }}
+      password: ${{ secrets.EMAIL_PASSWORD }}
+      subject: GitHub Actions Build Failed
+      body: |
+        Repository: ${{ github.repository }}
+        Commit: ${{ github.sha }}
+
+        Build failed.
+
+        Workflow:
+        https://github.com/${{ github.repository }}/actions
+      to: srengty@gmail.com
+      from: ${{ secrets.EMAIL_USERNAME }}
+```
